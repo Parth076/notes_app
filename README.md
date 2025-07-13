@@ -19,7 +19,8 @@ This Notes App was built as part of a **Flutter Mini Assignment** with a time co
 
 - ### 1. Clone the Repository
 
-cd notes-app
+  git clone https://github.com/your-username/notes-app.git
+  cd notes-app
 
 - ### 2.Install Dependencies
 
