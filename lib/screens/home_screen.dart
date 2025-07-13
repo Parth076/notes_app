@@ -13,6 +13,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Note> _notes = [];
+  List<Note> _filteredNotes = [];
+  bool _isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -26,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (notesJson != null) {
       setState(() {
         _notes = Note.decode(notesJson);
+        _filteredNotes = _notes;
       });
     }
   }
@@ -44,28 +48,66 @@ class _HomeScreenState extends State<HomeScreen> {
     if (newItem != null && newItem is Note) {
       setState(() {
         _notes.add(newItem);
+        _filteredNotes = _notes;
       });
       _saveNotes();
     }
   }
 
+  void _searchNote(String query) {
+    final suggestions = _notes.where((note) {
+      final noteTitle = note.title.toLowerCase();
+      final input = query.toLowerCase();
+      return noteTitle.contains(input);
+    }).toList();
+
+    setState(() {
+      _filteredNotes = suggestions;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget content = Center(child: Text('No items added yet'));
-    if (_notes.isNotEmpty) {
+    Widget content = Center(child: Text('No notes found'));
+    if (_filteredNotes.isNotEmpty) {
       content = ListView.builder(
-        itemCount: _notes.length,
+        itemCount: _filteredNotes.length,
         itemBuilder: (context, index) {
-          final addedNotes = _notes[index];
+          final addedNotes = _filteredNotes[index];
           return NoteTile(note: addedNotes);
         },
       );
     }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Notes'),
+        title: _isSearching
+            ? TextField(
+                controller: _searchController,
+                autofocus: true,
+                onChanged: _searchNote,
+                decoration: InputDecoration(
+                  hintText: 'Search notes...',
+                  border: InputBorder.none,
+                ),
+              )
+            : Text('Your Notes'),
         centerTitle: true,
         backgroundColor: Colors.lightBlueAccent,
+        actions: [
+          IconButton(
+            icon: Icon(_isSearching ? Icons.close : Icons.search),
+            onPressed: () {
+              setState(() {
+                if (_isSearching) {
+                  _searchController.clear();
+                  _filteredNotes = _notes;
+                }
+                _isSearching = !_isSearching;
+              });
+            },
+          ),
+        ],
       ),
       body: content,
       floatingActionButton: Padding(
@@ -77,5 +119,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }

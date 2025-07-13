@@ -37,7 +37,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         description: _description,
         createdAt: DateTime.now(),
       );
-
       Navigator.of(context).pop(newNote);
     }
   }
