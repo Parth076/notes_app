@@ -1,16 +1,35 @@
-# notes_app
+# 📝 Notes App
 
-A new Flutter project.
+A Flutter Mini Assignment project that allows users to **create**, **manage**, and **search** notes. This simple notes app stores data locally and provides a clean and intuitive UI.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📋 App Overview
 
-A few resources to get you started if this is your first Flutter project:
+This Notes App was built as part of a **Flutter Mini Assignment** with a time constraint of **4 hours**. The application lets users:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🖊️ Add new notes with title and description
+- 🧠 View all saved notes
+- 🔍 Search notes by title
+- 💾 Store notes locally using `SharedPreferences`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🚀 Setup Instructions
+
+- ### 1. Clone the Repository
+
+cd notes-app
+
+- ### 2.Install Dependencies
+
+flutter pub get
+
+- ### 3. Run the App
+
+flutter run
+
+- ### 💻 Flutter Version Used
+  Flutter SDK: 3.32.4
+
+Dart SDK: 3.8.1
